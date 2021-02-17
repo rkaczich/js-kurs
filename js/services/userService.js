@@ -3,10 +3,19 @@ class UserService {
   static init(){
     // load user data from spource
     var user = UserService.createUser(1, "Herbert", "xxxxx", "herbert@irgendwas.de", "01.01.1900");
-    // create presentation of user
-    UserService.displayUser(user);
+    var user2 = UserService.createUser(2, "Franz", "xxxxx", "franz@irgendwas.de", "01.01.1900");
 
-    UserService.createTableHeader(user);
+    var userList = new UserList();
+    userList.addUser(user);
+    userList.addUser(user2);
+
+
+    //console.log(userList.users);
+
+    UserService.createTableHeaderAndContent(user);
+
+    UserService.showUsers(userList.users);
+
   }
 
   static createUser(id, name, password, email, birthday){
@@ -14,27 +23,39 @@ class UserService {
     return user;
   }
 
-  static createTableHeader(user){
-    var columnNames = Object.keys(user);
-    var result = "";
-    for (var i = 0; i < columnNames.length; i++) {
-      var columnName = "<th>" + columnNames[i] + "</th>";
-      result = result + columnName;
-    }
 
-    document.getElementById("header").innerHTML = result;
+  static showUsers(userList){
+    var result = [];
+     var resultContent="";
+     for (var i = 0; i < userList.length; i++) {
+       resultContent = resultContent + "<tr>"
+       let user = userList[i];
+       console.log(user);
+       result = UserService.createTableHeaderAndContent(user);
+       resultContent = resultContent + result[1] + "</tr>";
+     }
+
+     document.getElementById("header").innerHTML = result[0];
+     document.getElementById("content").innerHTML = resultContent;
   }
 
-  static displayUser(user){
 
+  static createTableHeaderAndContent(user){
+    var columnNames = Object.keys(user);
     var columnValueArray = Object.values(user);
-    var result = "<tr>";
-    for (var i = 0; i < columnValueArray.length; i++) {
+
+    var resultHeader = "";
+    var resultContent = "<tr>";
+
+    for (var i = 0; i < columnNames.length; i++) {
+      var columnName = "<th>" + columnNames[i] + "</th>";
+      resultHeader = resultHeader + columnName;
+
       var columnValue = "<td>" + columnValueArray[i] + "</td>";
-      result = result + columnValue;
+      resultContent = resultContent + columnValue;
     }
 
-    document.getElementById("content").innerHTML = result + "</tr>";
+    return [resultHeader, resultContent];
   }
 
   static changePassword(oldPassword, newPassword, repeatedNewPassword){
