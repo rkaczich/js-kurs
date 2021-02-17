@@ -4,17 +4,26 @@ class UserService {
     // load user data from spource
     var user = UserService.createUser(1, "Herbert", "xxxxx", "herbert@irgendwas.de", "01.01.1900");
     var user2 = UserService.createUser(2, "Franz", "xxxxx", "franz@irgendwas.de", "01.01.1900");
+    var user3 = UserService.createUser(3, "Hugo", "xxxxx", "hugo@irgendwas.de", "01.01.1900");
 
     var userList = new UserList();
     userList.addUser(user);
     userList.addUser(user2);
+    userList.addUser(user3);
 
-
-    //console.log(userList.users);
-
-    UserService.createTableHeaderAndContent(user);
 
     UserService.showUsers(userList.users);
+
+
+
+
+    var string = "hallo ballo knallo";
+    console.log(string.length);
+    console.log(string.indexOf("ballo"));
+    console.log(string.slice(0, 1) );
+    console.log(string.substring(1))
+    console.log(string.substring(0,1).toUpperCase()+string.substring(1))
+
 
   }
 
@@ -30,7 +39,6 @@ class UserService {
      for (var i = 0; i < userList.length; i++) {
        resultContent = resultContent + "<tr>"
        let user = userList[i];
-       console.log(user);
        result = UserService.createTableHeaderAndContent(user);
        resultContent = resultContent + result[1] + "</tr>";
      }
@@ -48,7 +56,10 @@ class UserService {
     var resultContent = "<tr>";
 
     for (var i = 0; i < columnNames.length; i++) {
-      var columnName = "<th>" + columnNames[i] + "</th>";
+      var wrongColumnName = columnNames[i];
+      var correctColumnName = wrongColumnName.substring(0,1).toUpperCase()+wrongColumnName.substring(1)
+
+      var columnName = "<th>" + correctColumnName + "</th>";
       resultHeader = resultHeader + columnName;
 
       var columnValue = "<td>" + columnValueArray[i] + "</td>";

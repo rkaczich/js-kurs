@@ -7,5 +7,4 @@ class User {
    this.email = email;
    this.birthday = birthday;
  }
-
 }
